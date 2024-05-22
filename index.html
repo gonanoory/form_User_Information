@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple and beautifully designed form for capturing user information .">
+    <meta name="keywords" content="HTML, CSS, JavaScript, form, user information, table, responsive design">
+    <meta name="author" content="Meer Ary">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#ffffff">
+    <title>Form with Table Display</title>
+    <title>Form with Table Display</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: top;
+    height: 190vh;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 720px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-group input[type="radio"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f8f8f8;
+}
+
+td button {
+    background-color: #dc3545;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+td button:hover {
+    background-color: #c82333;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="userForm">
+            <h2>User Information</h2>
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" required>
+            </div>
+            <div class="form-group">
+                <label>Gender:</label>
+                <label><input type="radio" name="gender" value="Male" required> Male</label>
+                <label><input type="radio" name="gender" value="Female" required> Female</label>
+                <label><input type="radio" name="gender" value="Other" required> Other</label>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <select id="age" name="age" required>
+                    <option value="">Select Age</option>
+                    <!-- Options for ages 18 to 100 -->
+                    <script>
+                        for (let i = 18; i <= 100; i++) {
+                            document.write('<option value="' + i + '">' + i + '</option>');
+                        }
+                    </script>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="college">College:</label>
+                <input type="text" id="college" name="college" required>
+            </div>
+            <div class="form-group">
+                <label for="department">Department:</label>
+                <input type="text" id="department" name="department" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+
+        <h2>User Data</h2>
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>College</th>
+                    <th>Department</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- User data will be appended here -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+document.getElementById('userForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Get form data
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const gender = document.querySelector('input[name="gender"]:checked').value;
+    const age = document.getElementById('age').value;
+    const college = document.getElementById('college').value;
+    const department = document.getElementById('department').value;
+    const email = document.getElementById('email').value;
+
+    // Create a new row
+    const table = document.getElementById('userTable').getElementsByTagName('tbody')[0];
+    const newRow = table.insertRow();
+
+    // Insert cells
+    newRow.insertCell(0).textContent = firstName;
+    newRow.insertCell(1).textContent = lastName;
+    newRow.insertCell(2).textContent = gender;
+    newRow.insertCell(3).textContent = age;
+    newRow.insertCell(4).textContent = college;
+    newRow.insertCell(5).textContent = department;
+    newRow.insertCell(6).textContent = email;
+    const actionCell = newRow.insertCell(7);
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.onclick = function() {
+        table.deleteRow(newRow.rowIndex - 1);
+    };
+    actionCell.appendChild(deleteButton);
+
+    // Clear the form
+    document.getElementById('userForm').reset();
+});
+    </script>
+</body>
+</html>
